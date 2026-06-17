@@ -6,8 +6,8 @@ from utils.audio_preprocessor import process_input
 from core.transcriber import transcribe_all
 
 
-source = "https://youtu.be/5jd42cGMKEk?si=ZTKQeiKNvaprrbrB"
-language = "english"  # "english" → Whisper, "hinglish" → Sarvam
+source = "https://youtu.be/4vfvvzzwcwI?si=cYIL9N8korn-sAYY"
+language = "english"
 
 
 chunks = process_input(source)
