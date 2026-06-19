@@ -1,7 +1,7 @@
-import enum
 import os
+import torch
 from langchain_chroma import Chroma
-from langchain_community.embeddings import HuggingFaceBgeEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
 
@@ -11,7 +11,7 @@ EMBEDDING_MODEL = "all-MiniLM-L6-v2"
 
 
 def get_embedding():
-    return HuggingFaceBgeEmbeddings(
+    return HuggingFaceEmbeddings(
         model_name=EMBEDDING_MODEL,
         model_kwargs={"device": "cuda" if torch.cuda.is_available() else "cpu"},
     )

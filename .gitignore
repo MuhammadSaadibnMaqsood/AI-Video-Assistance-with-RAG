@@ -12,3 +12,4 @@ downloades/
 *.mkv
 
 .env
+vector_db/

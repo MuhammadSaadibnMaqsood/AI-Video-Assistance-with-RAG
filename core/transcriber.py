@@ -22,26 +22,34 @@ def load_model():
     return _model
 
 
-def transcribe_chunk(chunks_path: str, translate: bool = False) -> str:
+def transcribe_chunk(chunks_path: str, language: str = "english") -> str:
     model = load_model()
 
-    task = "translate" if translate else "transcribe"
-    print(f"Transcribing chunk ({task} {WHISPER_MODEL})...")
+    # Map language to whisper task and language code
+    if language.lower() == "hinglish":
+        # Hinglish: transcribe in Hindi then Whisper will handle mixed Hindi/English
+        task = "transcribe"
+        lang_code = "hi"
+    else:
+        task = "transcribe"
+        lang_code = "en"
+
+    print(f"Transcribing chunk ({task}, lang={lang_code}, model={WHISPER_MODEL})...")
 
     # Explicitly set fp16=False on CPU to avoid warnings and speed up transcription
     use_fp16 = torch.cuda.is_available()
-    result = model.transcribe(chunks_path, fp16=use_fp16)
+    result = model.transcribe(chunks_path, task=task, language=lang_code, fp16=use_fp16)
 
     return result["text"]
 
 
-def transcribe_all(chunks: list, translate: bool = False) -> str:
+def transcribe_all(chunks: list, language: str = "english") -> str:
     full_transcript = ""
 
     for i, chunk in enumerate(chunks):
         print(f"\n--- Chunk {i+1}/{len(chunks)} ---")
 
-        text = transcribe_chunk(chunk, translate)
+        text = transcribe_chunk(chunk, language)
         full_transcript += text + "\n"
 
         if os.path.exists(chunk):
