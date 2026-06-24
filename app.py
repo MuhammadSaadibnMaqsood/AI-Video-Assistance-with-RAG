@@ -1,13 +1,12 @@
 import streamlit as st
-import time
 from dotenv import load_dotenv
 
-# ── Uncomment these when your modules are ready ──────────────────────────────
-# from utils.audio_preprocessor import process_input
-# from core.transcriber import transcribe_all
-# from core.summarize import summarize, generate_title
-# from core.extractor import extract_action_items, extract_key_decisions, extract_questions
-# from core.rag_engine import build_rag_chain, ask_question
+# ── Pipeline Modules ──────────────────────────────────────────────────────────
+from utils.audio_preprocessor import process_input
+from core.transcriber import transcribe_all
+from core.summarize import summarize, generate_title
+from core.extractor import extract_action_items, extract_key_decisions, extract_questions
+from core.rag_engine import build_rag_chain, ask_question
 
 load_dotenv()
 
@@ -774,44 +773,29 @@ if run_btn:
                 st.info("⚙️  Pipeline running — watch the sidebar for live status…")
 
             update_step("audio", "active")
-            # chunks = process_input(source)        # ← uncomment when ready
-            time.sleep(0.8)  # ← remove when using real fn
+            chunks = process_input(source)
             update_step("audio", "done")
 
             update_step("transcript", "active")
-            # transcript = transcribe_all(chunks, language)
-            time.sleep(0.8)
-            transcript = "[Sample transcript — replace with real output]"
+            transcript = transcribe_all(chunks, language)
             update_step("transcript", "done")
 
             update_step("title", "active")
-            # title = generate_title(transcript)
-            time.sleep(0.5)
-            title = "Sample Meeting Title — Replace with Real Output"
+            title = generate_title(transcript)
             update_step("title", "done")
 
             update_step("summary", "active")
-            # summary = summarize(transcript)
-            time.sleep(0.6)
-            summary = (
-                "This is a placeholder summary. Replace with output from summarize()."
-            )
+            summary = summarize(transcript)
             update_step("summary", "done")
 
             update_step("extract", "active")
-            # action_items = extract_action_items(transcript)
-            # decisions    = extract_key_decisions(transcript)
-            # questions    = extract_questions(transcript)
-            time.sleep(0.6)
-            action_items = "• Action item 1\n• Action item 2\n• Action item 3"
-            decisions = "• Key decision 1\n• Key decision 2"
-            questions = "• Open question 1\n• Open question 2"
+            action_items = extract_action_items(transcript)
+            decisions = extract_key_decisions(transcript)
+            questions = extract_questions(transcript)
             update_step("extract", "done")
 
             update_step("rag", "active")
-            # rag_chain = build_rag_chain(transcript)
-            time.sleep(0.5)
-            rag_chain = None  # placeholder
+            rag_chain = build_rag_chain(transcript)
             update_step("rag", "done")
 
             st.session_state.result = {
@@ -980,8 +964,7 @@ if st.session_state.result:
 
     if send_btn and user_input.strip():
         with st.spinner("Thinking…"):
-            # answer = ask_question(r["rag_chain"], user_input.strip())  # ← uncomment when ready
-            answer = f'[RAG answer placeholder for: "{user_input.strip()}"]'
+            answer = ask_question(r["rag_chain"], user_input.strip())
         st.session_state.chat_history.append(
             {"role": "user", "content": user_input.strip()}
         )
