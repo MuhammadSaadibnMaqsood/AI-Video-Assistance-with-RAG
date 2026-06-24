@@ -13,7 +13,7 @@ load_dotenv()
 
 # ─── Page Config ─────────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title="AI Video Assistant",
+    page_title="InsightStream AI",
     page_icon="🎬",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -703,7 +703,7 @@ with st.sidebar:
     <div class="sb-logo">
         <div class="sb-logo-icon">🎬</div>
         <div>
-            <div class="sb-logo-name">AI Video</div>
+            <div class="sb-logo-name">InsightStream AI</div>
             <div class="sb-logo-tag">Meeting Intelligence</div>
         </div>
     </div>""",
@@ -738,7 +738,7 @@ with st.sidebar:
 
 # ─── Main Area ───────────────────────────────────────────────────────────────
 # Hero
-st.markdown('<div class="hero-title">AI Video Assistant</div>', unsafe_allow_html=True)
+st.markdown('<div class="hero-title">InsightStream AI</div>', unsafe_allow_html=True)
 st.markdown(
     '<div class="hero-sub">Transcribe · Summarise · Chat with your meetings</div>',
     unsafe_allow_html=True,
